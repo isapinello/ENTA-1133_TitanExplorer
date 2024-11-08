@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         // Freeze rotation on the Rigidbody so it doesn’t spin with physics
         physicsBody.freezeRotation = true;
     }
