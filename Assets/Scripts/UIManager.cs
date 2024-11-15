@@ -8,13 +8,12 @@ public class UIManager : MonoBehaviour
 
     private enum MenuLayouts
     {
-        Main = 0,
-        InGame = 1,
-        Pause = 2
+        InGame = 0,
+        Pause = 1
     }
     private void Start()
     {
-        OpenMainMenu();
+        ActivateInGameHUD();
     }
     private void SetLayout(MenuLayouts layout)
     {
@@ -22,10 +21,6 @@ public class UIManager : MonoBehaviour
         {
             Layouts[i].SetActive((int)layout == i);
         }
-    }
-    public void OpenMainMenu()
-    {
-        SetLayout(MenuLayouts.Main);
     }
     public void ActivateInGameHUD()
     {

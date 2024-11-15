@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
    // [SerializeField] private int mapSize = 5;
     [SerializeField] private MapManager GameMapPrefab;
     [SerializeField] private PlayerController PlayerPrefab;
+    [SerializeField] private InGameHUD GameHUD;
    // public int MapSize => mapSize;
     private PlayerController _playerController;
     private MapManager _gameMap;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
         transform.position = Vector3.zero;
         SetupMap();
         SpawnPlayer();
+        GameHUD.OnStartGame();
     }
     private void SetupMap()
     {

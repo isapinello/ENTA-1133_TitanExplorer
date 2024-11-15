@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     {
         // Initialize Rigidbody and lock the cursor
         physicsBody = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

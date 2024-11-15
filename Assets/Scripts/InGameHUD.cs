@@ -7,14 +7,19 @@ public class InGameHUD : MonoBehaviour
 {
     [SerializeField] Text Timer;
     [SerializeField] Image HealthBar;
+    [SerializeField] UIManager Ui;
 
-    private bool _gamePaused = true;
+    public bool _gamePaused = true;
     private float _timer = 120f;
 
     public void OnStartGame()
     {
         _gamePaused = false;
         HealthBar.fillAmount = 1;
+    }
+    public void Unpaused()
+    {
+        _gamePaused = false;
     }
     private void Update()
     {
@@ -29,6 +34,6 @@ public class InGameHUD : MonoBehaviour
     public void OnPauseGame()
     {
         _gamePaused = true;
-        
+        Ui.ShowPauseMenu();
     }
 }
