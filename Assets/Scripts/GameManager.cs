@@ -50,4 +50,9 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Player spawned at room coordinates: {roomCoords}");
     }
+
+    private void Update()
+    {
+
+    }
 }
