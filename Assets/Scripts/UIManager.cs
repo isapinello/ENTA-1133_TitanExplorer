@@ -5,11 +5,12 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] Layouts;
-
+    [SerializeField] private CombatRoomBase combatRoom;
     private enum MenuLayouts
     {
         InGame = 0,
-        Pause = 1
+        Pause = 1,
+        Combat = 2
     }
     private void Start()
     {
@@ -29,5 +30,9 @@ public class UIManager : MonoBehaviour
     public void ShowPauseMenu()
     {
         SetLayout(MenuLayouts.Pause);
+    }
+    public void ActivateCombat()
+    {
+        SetLayout(MenuLayouts.Combat);
     }
 }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
    // [SerializeField] private int mapSize = 5;
     [SerializeField] private MapManager GameMapPrefab;
     [SerializeField] private PlayerController PlayerPrefab;
-    [SerializeField] private InGameHUD GameHUD;
+    private InGameHUD GameHUD;
    // public int MapSize => mapSize;
     private PlayerController _playerController;
     private MapManager _gameMap;
@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         transform.position = Vector3.zero;
         SetupMap();
         SpawnPlayer();
+        GameHUD = FindObjectOfType<InGameHUD>();
         GameHUD.OnStartGame();
     }
     private void SetupMap()
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
         _gameMap = Instantiate(GameMapPrefab, transform);
         _gameMap.transform.position = Vector3.zero;
         // create the map
-        _gameMap.CreateMap();
+        _gameMap.CreateMap(this);
         Debug.Log("GameManager Setup Complete");
     }
     private void SpawnPlayer()
@@ -51,10 +52,5 @@ public class GameManager : MonoBehaviour
         _playerController.transform.position = new Vector3(roomCoords.x, 0, roomCoords.y);
 
         Debug.Log($"Player spawned at room coordinates: {roomCoords}");
-    }
-
-    private void Update()
-    {
-
     }
 }

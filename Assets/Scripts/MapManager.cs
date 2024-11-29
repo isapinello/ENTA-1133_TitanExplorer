@@ -6,13 +6,15 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] private RoomBase[] RoomPrefabs; // Prefabs of the specific rooms
     [SerializeField] private float RoomSize = 3.2f; // Gap between rooms
+    private GameManager _manager;
 
     private const int MapSize = 4;
     readonly Dictionary<Vector2, RoomBase> _rooms = new();
     public Dictionary<Vector2, RoomBase> Rooms => _rooms;
 
-    public void CreateMap()
+    public void CreateMap(GameManager manager)
     {
+        _manager = manager;
         for (int x = 0; x < MapSize; x++)
         {
             for (int z = 0; z < MapSize; z++)

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float MoveSpeed = 1.0f;
     [SerializeField] private float RotationSpeed = 1.0f;
+    [SerializeField] PlayerManager player;
     private RoomBase _currentRoom = null;
 
     [SerializeField] private Transform PlayerHead;
@@ -22,23 +23,19 @@ public class PlayerController : MonoBehaviour
         physicsBody = GetComponent<Rigidbody>();
 
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible = false;
 
         // Freeze rotation on the Rigidbody so it doesn’t spin with physics
         physicsBody.freezeRotation = true;
     }
 
-    /// <summary>
-    /// Look around with camera every frame in Update
-    /// </summary>
+    // Look around with camera every frame in Update
     void Update()
     {
         MoveCameraWithMouse();
     }
 
-    /// <summary>
-    /// Move with physics only on Fixed Update
-    /// </summary>
+    // Move with physics only on Fixed Update
     private void FixedUpdate()
     {
         MoveWithPhysics();

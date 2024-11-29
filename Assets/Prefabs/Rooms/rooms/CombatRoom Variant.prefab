@@ -588,6 +588,7 @@ MonoBehaviour:
   EastDoorway: {fileID: 8045580229059490226}
   SouthDoorway: {fileID: 3427240527750152267}
   WestDoor: {fileID: 7425118985401370303}
+  Ui: {fileID: 6790276755750801128, guid: 1b31313dda56fc04aa83ef03c05b030c, type: 3}
 --- !u!4 &3214028691216611429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2105020097298290781, guid: ca515c7127f07a441a36d46830e770e1, type: 3}
