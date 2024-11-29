@@ -6,6 +6,7 @@ public class CombatRoomBase : RoomBase
 {
     private InGameHUD _inGameHUD;
 
+    [System.Obsolete]
     private void Start()
     {
         _inGameHUD = FindObjectOfType<InGameHUD>();

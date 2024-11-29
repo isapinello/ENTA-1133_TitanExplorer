@@ -9,8 +9,8 @@ using UnityEngine;
 [System.Serializable]
 public class Weapon : MonoBehaviour
 {
-    public string Name { get; private set; }
-    public int DiceSides { get; private set; }
+    [SerializeField] public string Name { get; private set; }
+    [SerializeField] public int DiceSides { get; private set; }
 
     public Weapon(string name, int diceSides)
     {

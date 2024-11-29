@@ -23,7 +23,7 @@ public class Decomposer : MonoBehaviour
     public void TakeDamage(int damage)
     {
         HP -= damage;
-        if (HP < 0) HP = 0;
+        if (HP < 0) HP = 0; // So it doesn't appear neggative
     }
 
     // Derived classes for specific enemy types

@@ -5,14 +5,15 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private List<Weapon> _inventory = new List<Weapon>();
+    private CombatSystem _combatSystem;
     private Weapon _currentWeapon;
     public Weapon CurrentWeapon => _currentWeapon;
     public int HP { get; private set; } = 100;
     void Start()
     {
-        _inventory.Add(new Weapon("Pickaxe", 6)); // Rolls 1-6
-        _inventory.Add(new Weapon("Machete", 8)); // Rolls 1-8
-        _inventory.Add(new Weapon("Flamethrower", 10)); // Rolls 1-10
+        _inventory.Add(gameObject.AddComponent<Weapon>());
+        _inventory.Add(gameObject.AddComponent<Weapon>());
+        _inventory.Add(gameObject.AddComponent<Weapon>());
     }
     private void OnEnable()
     {
@@ -42,9 +43,7 @@ public class PlayerManager : MonoBehaviour
 
     public int RollDice()
     {
-        return _currentWeapon != null
-            ? Random.Range(1, _currentWeapon.DiceSides + 1)
-            : throw new System.InvalidOperationException("No weapon equipped to roll dice.");
+        return Random.Range(1, _currentWeapon.DiceSides + 1); // Roll based on current weapon
     }
 
     public void TakeDamage(int damage)

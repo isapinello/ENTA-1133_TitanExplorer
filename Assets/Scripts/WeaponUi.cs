@@ -8,17 +8,8 @@ public class WeaponUi : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private Button[] weaponButtons;
 
-    private void Start()
+    private void SelectPickaxe()
     {
-        for (int i = 0; i < weaponButtons.Length; i++)
-        {
-            int index = i; // Local copy for closure
-            weaponButtons[i].onClick.AddListener(() => SelectWeapon(index));
-        }
-    }
-
-    public void SelectWeapon(int weaponIndex)
-    {
-        playerManager.ChooseWeapon(weaponIndex);
+        //playerManager.ChooseWeapon(int index);
     }
 }
