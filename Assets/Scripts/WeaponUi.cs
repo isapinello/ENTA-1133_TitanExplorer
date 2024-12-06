@@ -5,11 +5,6 @@ using UnityEngine.UI;
 
 public class WeaponUi : MonoBehaviour
 {
-    [SerializeField] private PlayerManager playerManager;
-    [SerializeField] private Button[] weaponButtons;
-
-    private void SelectPickaxe()
-    {
-        //playerManager.ChooseWeapon(int index);
-    }
+    public string Name;
+    public int DiceSides;
 }

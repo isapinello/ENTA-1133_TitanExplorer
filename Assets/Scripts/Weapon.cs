@@ -1,20 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor;
-using UnityEngine;
-
-[System.Serializable]
+﻿using UnityEngine;
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] public string Name { get; private set; }
-    [SerializeField] public int DiceSides { get; private set; }
+    [SerializeField] private string weaponName; // Name of the weapon
+    [SerializeField] private int diceSides; // Number of sides on the weapon's dice
 
-    public Weapon(string name, int diceSides)
+    public string Name => weaponName;
+    public int DiceSides => diceSides;
+
+    private CombatSystem combatSystem;
+
+    [System.Obsolete]
+    private void Start()
     {
-        Name = name;
-        DiceSides = diceSides;
+        combatSystem = FindObjectOfType<CombatSystem>();
+        if (combatSystem == null)
+        {
+            Debug.LogError("CombatSystem not found in the scene!");
+        }
+    }
+
+    public void OnWeaponClicked()
+    {
+        if (combatSystem == null)
+        {
+            Debug.LogError("CombatSystem not initialized!");
+            return;
+        }
+
+        Debug.Log($"Weapon selected: {weaponName}");
+        combatSystem.PlayerSelectWeapon(this);
     }
 }

@@ -8,14 +8,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float MoveSpeed = 1.0f;
     [SerializeField] private float RotationSpeed = 1.0f;
     [SerializeField] PlayerManager player;
+    [SerializeField] private Rigidbody physicsBody;
     private RoomBase _currentRoom = null;
 
     [SerializeField] private Transform PlayerHead;
 
-    private Rigidbody physicsBody;
-
     private float horizontalFacing = 0f;
     private float verticalFacing = 0f;
+
+    public bool isMoving = true;
 
     void Start()
     {
@@ -32,13 +33,19 @@ public class PlayerController : MonoBehaviour
     // Look around with camera every frame in Update
     void Update()
     {
-        MoveCameraWithMouse();
+        if (enabled)
+        {
+            MoveCameraWithMouse();
+        }
     }
 
     // Move with physics only on Fixed Update
     private void FixedUpdate()
     {
-        MoveWithPhysics();
+        if (enabled)
+        {
+            MoveWithPhysics();
+        }
     }
 
     private void MoveCameraWithMouse()
@@ -82,5 +89,14 @@ public class PlayerController : MonoBehaviour
     {
         RoomBase exitingRoom = otherObject.GetComponent<RoomBase>();
         exitingRoom.OnRoomExited();
+    }
+    public void SetMovementEnabled(bool enabled)
+    {
+        isMoving = enabled;
+
+        if (!enabled)
+        {
+            isMoving = false;
+        }
     }
 }

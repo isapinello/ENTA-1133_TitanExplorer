@@ -200,7 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec1609af8d3755408d0e8f896f849c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponModels: []
+  maxHealth: 100
+  lifeCores: 0
+  currentHealth: 0
 --- !u!1 &8261485467117545489
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +254,7 @@ MonoBehaviour:
   MoveSpeed: 2
   RotationSpeed: 700
   player: {fileID: 5649267653774396700, guid: f20f118996c3d3843a52a64d7a647362, type: 3}
+  physicsBody: {fileID: 9094883102562278686}
   PlayerHead: {fileID: 6559421077736992636}
 --- !u!136 &266087722093984202
 CapsuleCollider:
