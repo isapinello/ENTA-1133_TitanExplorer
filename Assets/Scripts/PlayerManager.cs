@@ -4,51 +4,89 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private List<Weapon> _inventory = new List<Weapon>();
-    private CombatSystem _combatSystem;
-    private Weapon _currentWeapon;
-    public Weapon CurrentWeapon => _currentWeapon;
-    public int HP { get; private set; } = 100;
-    void Start()
+    [SerializeField] private int maxHealth = 100; // Maximum health of the player
+    [SerializeField] private int lifeCores = 0;
+
+    public int currentHealth;
+    public int LifeCores => lifeCores;
+
+    private void Start()
     {
-        _inventory.Add(gameObject.AddComponent<Weapon>());
-        _inventory.Add(gameObject.AddComponent<Weapon>());
-        _inventory.Add(gameObject.AddComponent<Weapon>());
+        currentHealth = maxHealth; // Initialize player's health
+        Debug.Log($"Player starts with {currentHealth} HP.");
     }
-    private void OnEnable()
+
+    public void TakeDamage(int damage) // Decreases a certain ammount of HP during combat
     {
-        if (_inventory.Count > 0)
+        currentHealth -= damage;
+        if (currentHealth < 0) currentHealth = 0;
+
+        Debug.Log($"Player takes {damage} damage. Current health: {currentHealth}");
+        UpdateHealthUI();
+
+        if (currentHealth == 0)
         {
-            _currentWeapon = _inventory[0];
-            Debug.Log($"Default weapon set to: {_currentWeapon.Name}");
-        }
-        else
-        {
-            Debug.Log("No weapons available in the inventory!");
+            OnPlayerDeath();
         }
     }
 
-    public void ChooseWeapon(int index)
+    public void Heal(int amount) // Restores a certain ammount of HP during combat
     {
-        if (index >= 0 && index < _inventory.Count)
-        {
-            _currentWeapon = _inventory[index];
-            Debug.Log($"Weapon selected: {_currentWeapon.Name}");
-        }
-        else
-        {
-            Debug.LogError("Invalid weapon index selected!");
-        }
+        currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+
+        Debug.Log($"Player heals {amount} HP. Current health: {currentHealth}");
+        UpdateHealthUI();
     }
 
-    public int RollDice()
+    public bool IsDead()
     {
-        return Random.Range(1, _currentWeapon.DiceSides + 1); // Roll based on current weapon
+        return currentHealth <= 0;
     }
 
-    public void TakeDamage(int damage)
+    private void UpdateHealthUI()
     {
-        HP = Mathf.Max(HP - damage, 0);
-        Debug.Log($"Player took {damage} damage. Current HP: {HP}");
+        // Update the health bar or other UI elements
+        Debug.Log("Player health UI updated.");
+    }
+
+    private void OnPlayerDeath()
+    {
+        Debug.Log("Player has died!"); // Debug
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+    public void AddLifeCore(int amount)
+    {
+        lifeCores += amount;
+        Debug.Log($"Player gained {amount} Life Core(s). Total: {lifeCores}");
+    }
+
+    public bool UseLifeCore(int healAmount)
+    {
+        if (lifeCores > 0 && currentHealth < maxHealth)
+        {
+            lifeCores--;
+
+            // Ensure currentHealth does not exceed maxHealth
+            currentHealth += healAmount;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+
+            Debug.Log($"Player used a Life Core. Healed for {healAmount} HP. Current Health: {currentHealth}/{maxHealth}. Remaining Life Cores: {lifeCores}");
+            return true;
+        }
+        Debug.Log("No Life Cores left or health is already full.");
+        return false;
     }
 }

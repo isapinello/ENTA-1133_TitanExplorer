@@ -1,44 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Decomposer : MonoBehaviour
 {
-    public string Name { get; protected set; }
-    public int HP { get; protected set; }
-    public int DiceSides { get; protected set; }
+    [SerializeField] public string Name;
+    [SerializeField] public int HP;
+    [SerializeField] public int DiceSides;
+    [SerializeField] public Sprite uiImage;
 
-    protected Decomposer(string name, int hp, int diceSides)
+    // Public properties to access private serialized fields
+    public Sprite GetUIImage()
     {
-        Name = name;
-        HP = hp;
-        DiceSides = diceSides;
+        return uiImage;
     }
 
-    public int RollDice()
+    public virtual int RollDice()
     {
-        return Random.Range(1, DiceSides + 1); // Roll dice inclusive of DiceSides
+        return Random.Range(1, DiceSides + 1); // Roll dice inclusive of diceSides
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         HP -= damage;
-        if (HP < 0) HP = 0; // So it doesn't appear neggative
-    }
-
-    // Derived classes for specific enemy types
-    public class SmallLarvae : Decomposer
-    {
-        public SmallLarvae() : base("Small Larvae", 30, 10) { }
-    }
-
-    public class RoundWorm : Decomposer
-    {
-        public RoundWorm() : base("Round Worm", 50, 12) { }
-    }
-
-    public class BoneCrusher : Decomposer
-    {
-        public BoneCrusher() : base("Bone Crusher", 70, 15) { }
+        if (HP < 0) HP = 0; // Ensure HP does not go negative
     }
 }

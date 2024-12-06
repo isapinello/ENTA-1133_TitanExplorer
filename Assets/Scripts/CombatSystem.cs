@@ -1,88 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using System.Collections.Generic;
 
 public class CombatSystem : MonoBehaviour
 {
-    [SerializeField] private PlayerManager _player;
-    private List<Decomposer> _enemies; // List to hold multiple enemies
+    [SerializeField] private List<GameObject> decomposerPrefabs; // Drag-and-drop enemy prefabs
+    [SerializeField] private CombatUI combatUI; // Reference to Combat UI
+    //[SerializeField] private PlayerController playerController;
 
-    public CombatSystem(PlayerManager player)
-    {
-        _player = player;
-        _enemies = GetRandomEnemies(); // Get a random set of enemies when combat starts
-    }
-    // Method to randomly select multiple enemies
-    private List<Decomposer> GetRandomEnemies()
-    {
-        int enemyCount = Random.Range(1, 4); // Randomly choose 1 to 3 enemies
-        var enemies = new List<Decomposer>();
+    private Decomposer currentEnemy;
 
-        for (int i = 0; i < enemyCount; i++)
-        {
-            enemies.Add(GetRandomEnemy());
-        }
-        return enemies;
-    }
-    // Method to randomly select an enemy
-    private Decomposer GetRandomEnemy()
-    {
-        int enemyType = Random.Range(1, 4);
-
-        return enemyType switch
-        {
-            1 => new Decomposer.SmallLarvae(),
-            2 => new Decomposer.RoundWorm(),
-            3 => new Decomposer.BoneCrusher(),
-            _ => new Decomposer.SmallLarvae() // Fallback in case something goes wrong
-        };
-    }
     public void StartCombat()
     {
-        /*if (_player?.CurrentWeapon == null)
+        //playerController.DisableMovement();
+        if (decomposerPrefabs == null || decomposerPrefabs.Count == 0)
         {
-            Debug.Log("Combat cannot start: PlayerManager or CurrentWeapon is missing!");
+            Debug.LogError("No Decomposer prefabs assigned to CombatSystem!");
             return;
         }
 
-        int playerRoll = _player.RollDice();
-        Debug.Log($"Player rolled: {playerRoll} using {_player.CurrentWeapon.Name}");*/
-        while (_player.HP > 0 && _enemies.Any(e => e.HP > 0))
+        // Select a random prefab and instantiate it to get the Decomposer
+        GameObject selectedPrefab = decomposerPrefabs[Random.Range(0, decomposerPrefabs.Count)];
+        currentEnemy = Instantiate(selectedPrefab).GetComponent<Decomposer>();
+
+        if (currentEnemy == null)
         {
-            foreach (var enemy in _enemies)
-            {
-                int playerRoll = _player.RollDice();
-                int enemyRoll = enemy.RollDice();
-                Debug.Log($"You rolled: {playerRoll}, {enemy.Name} rolled: {enemyRoll}");
-
-                if (playerRoll > enemyRoll)
-                {
-                    int damage = playerRoll - enemyRoll;
-                    enemy.TakeDamage(damage);
-                    Debug.Log($"You dealt {damage} damage to {enemy.Name}! {enemy.Name} HP: {enemy.HP}");
-                }
-                else if (enemyRoll > playerRoll)
-                {
-                    int damage = enemyRoll - playerRoll;
-                    _player.TakeDamage(damage);
-                    Debug.Log($"{enemy.Name} dealt {damage} damage to you! Your HP: {_player.HP}");
-                }
-                else
-                {
-                    Debug.Log("sudgfhsfghj");
-                }
-
-                if (_player.HP <= 0)
-                {
-                    return;
-                }
-
-                if (enemy.HP <= 0)
-                {
-                    Debug.Log("sudgfhsfghj");
-                }
-            }
+            Debug.LogError("Selected prefab does not have a Decomposer component!");
+            return;
         }
+        if (currentEnemy.Name == "Bonecrusher")
+        {
+            Debug.Log("The enemy is Bonecrusher!");
+        }
+        // Send enemy data to the UI
+        combatUI.DisplayEnemy(currentEnemy);
+    }
+
+    public void PlayerSelectWeapon(Weapon selectedWeapon)
+    {
+        Debug.Log($"Player selected weapon: {selectedWeapon.Name} with {selectedWeapon.DiceSides}-sided dice!");
+        ExecuteCombatTurn(selectedWeapon); // Enemy only attacks after the player selected the weapon
+    }
+
+    private void ExecuteCombatTurn(Weapon playerWeapon)
+    {
+        // Player's attack
+        int playerRoll = Random.Range(1, playerWeapon.DiceSides + 1);
+        Debug.Log($"Player rolled {playerRoll}!");
+
+        currentEnemy.TakeDamage(playerRoll);
+        combatUI.UpdateEnemyHP(currentEnemy.HP);
+
+        if (currentEnemy.HP <= 0)
+        {
+            EndCombat(true);
+            return;
+        }
+
+        // Enemy's attack
+        int enemyRoll = currentEnemy.RollDice();
+        Debug.Log($"Enemy rolled {enemyRoll}!");
+
+        combatUI.UpdatePlayerHealth(enemyRoll);
+
+        if (combatUI.IsPlayerDead())
+        {
+            EndCombat(false);
+        }
+    }
+
+    private void EndCombat(bool playerWon)
+    {
+        if (playerWon)
+        {
+            Debug.Log("Player won the combat!"); // Here for debugging
+        }
+        else
+        {
+            Debug.Log("Player lost the combat...");
+        }
+
+        combatUI.EndCombat(playerWon); // Ensures that the UI also ends the combat
+        if (currentEnemy != null) Destroy(currentEnemy.gameObject); // Clean up enemy instance
     }
 }
