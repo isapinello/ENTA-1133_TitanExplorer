@@ -28,6 +28,6 @@ public class Weapon : MonoBehaviour
         }
 
         Debug.Log($"Weapon selected: {weaponName}");
-        combatSystem.PlayerSelectWeapon(this);
+        combatSystem.PlayerSelectWeapon(this); // Ensures that the player doesn't select one weapon but uses another
     }
 }

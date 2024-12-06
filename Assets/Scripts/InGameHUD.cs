@@ -27,7 +27,7 @@ public class InGameHUD : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) // Press esc to pause game
         {
             OnPauseGame();
         }
@@ -35,18 +35,13 @@ public class InGameHUD : MonoBehaviour
         if (_gamePaused) return;
 
         _timer -= Time.deltaTime;
-        Timer.text = $"{_timer:0.000}";
-
-        if (_timer <= 0f)
-        {
-            Debug.Log("You got rescued");
-            _timer = 0f;
-        }
-        LifeCores.text = $"{playerManager.LifeCores}";
+        Timer.text = $"{_timer:0.000}"; // Timer goes counter-clock
+        LifeCores.text = $"{playerManager.LifeCores}"; // Shows how many life cores the player collected
         UpdateHealthBar();
 
-        if (_timer == 0f)
+        if (_timer <= 0) // Player wins the game and the timer doesn't go bellow 0
         {
+            _timer = 0f;
             Cursor.visible = true;
             Ui.ShowRescue();
         }
@@ -56,7 +51,7 @@ public class InGameHUD : MonoBehaviour
     {
         if (playerManager == null)
         {
-            Debug.LogWarning("PlayerManager not assigned!");
+            Debug.LogWarning("PlayerManager not assigned!"); // Debug to warn of the missing serialized field
             return;
         }
 
@@ -65,6 +60,7 @@ public class InGameHUD : MonoBehaviour
         HealthBar.fillAmount = healthPercentage; // Update the health bar
     }
 
+    // All the bellow ensure the timer doesn't run outside of the InGameHUD and the cursor is properly visible or not
     public void OnPauseGame()
     {
         Cursor.visible = true;
@@ -86,7 +82,7 @@ public class InGameHUD : MonoBehaviour
         Ui.ActivateTreasure();
     }
 
-    public void OnButtonYesPressed()
+    public void OnButtonYesPressed() // When inside a treasure room press yes to collect 1 life core
     {
         playerManager.AddLifeCore(1);
         _gamePaused = false;

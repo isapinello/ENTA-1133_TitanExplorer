@@ -26,6 +26,8 @@ public class MainMenuUI : MonoBehaviour
             Layout[i].SetActive((int)layout == i);
         }
     }
+
+    // Bellow is the logic to the "cut-scenes" activation
     public void OpenLogo()
     {
         SetLayout(MenuLayouts.Logo);

@@ -8,12 +8,12 @@ public class Decomposer : MonoBehaviour
     [SerializeField] public string Name;
     [SerializeField] public int HP;
     [SerializeField] public int DiceSides;
-    [SerializeField] public Sprite uiImage; // Assign the Image component in the Inspector
+    [SerializeField] public Sprite uiImage;
 
     // Public properties to access private serialized fields
     public Sprite GetUIImage()
     {
-        return uiImage; // Helper to get the image
+        return uiImage;
     }
 
     public virtual int RollDice()

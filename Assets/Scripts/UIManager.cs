@@ -16,9 +16,10 @@ public class UIManager : MonoBehaviour
         Treasure = 4,
         GotRescued = 5
     }
+
     private void Start()
     {
-        ActivateInGameHUD();
+        ActivateInGameHUD(); // Supposed to be always on if other layouts are not activated
     }
     public void ButtonRestartGame()
     {
@@ -31,6 +32,8 @@ public class UIManager : MonoBehaviour
             Layouts[i].SetActive((int)layout == i);
         }
     }
+
+    // Bellow is the logic of activation of each Layout
     public void ActivateInGameHUD()
     {
         playerController.SetMovementEnabled(true);

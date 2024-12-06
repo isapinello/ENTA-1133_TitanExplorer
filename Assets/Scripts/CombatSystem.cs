@@ -38,7 +38,7 @@ public class CombatSystem : MonoBehaviour
     public void PlayerSelectWeapon(Weapon selectedWeapon)
     {
         Debug.Log($"Player selected weapon: {selectedWeapon.Name} with {selectedWeapon.DiceSides}-sided dice!");
-        ExecuteCombatTurn(selectedWeapon);
+        ExecuteCombatTurn(selectedWeapon); // Enemy only attacks after the player selected the weapon
     }
 
     private void ExecuteCombatTurn(Weapon playerWeapon)
@@ -72,7 +72,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (playerWon)
         {
-            Debug.Log("Player won the combat!");
+            Debug.Log("Player won the combat!"); // Here for debugging
         }
         else
         {

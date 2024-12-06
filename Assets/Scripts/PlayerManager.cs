@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Log($"Player starts with {currentHealth} HP.");
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage) // Decreases a certain ammount of HP during combat
     {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(int amount) // Restores a certain ammount of HP during combat
     {
         currentHealth += amount;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
@@ -52,8 +52,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        Debug.Log("Player has died!");
-        // Trigger game over sequence or reload last checkpoint
+        Debug.Log("Player has died!"); // Debug
     }
 
     public int GetCurrentHealth()

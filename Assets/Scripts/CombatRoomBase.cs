@@ -8,7 +8,7 @@ public class CombatRoomBase : RoomBase
     private CombatSystem _startCombat;
 
     [System.Obsolete]
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // Trigger combat when player enters
     {
         _inGameHUD = FindObjectOfType<InGameHUD>();
         _startCombat = FindObjectOfType<CombatSystem>();

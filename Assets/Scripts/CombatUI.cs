@@ -14,13 +14,13 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private GameObject weaponsMenu;
     private void Start()
     {
-        weaponsMenu.SetActive(false);
+        weaponsMenu.SetActive(false); // So the Weapons don't cover the other buttons when combat starts
     }
     public void FightButton()
     {
         weaponsMenu.SetActive(true);
     }
-    public void DisplayEnemy(Decomposer enemy)
+    public void DisplayEnemy(Decomposer enemy) // Randomly selects an enemy, changing the name, HP, and image on the screen
     {
         enemyNameText.text = enemy.Name;
         enemyHPText.text = $"HP: {enemy.HP}";
@@ -29,7 +29,7 @@ public class CombatUI : MonoBehaviour
     }
     private void Update()
     {
-        playerHPText.text = $"HP: {playerManager.currentHealth}";
+        playerHPText.text = $"HP: {playerManager.currentHealth}"; // Shows player's HP even inside the Combat 
     }
     public void UpdateEnemyHP(int hp)
     {
@@ -52,7 +52,7 @@ public class CombatUI : MonoBehaviour
     {
         if (playerWon)
         {
-            playerManager.AddLifeCore(25);
+            playerManager.AddLifeCore(25); // Player receives more life cores when killing an enemy
             InGameHUD.Unpaused();
             UIManager.ActivateInGameHUD();
             Cursor.visible = false;
@@ -64,7 +64,7 @@ public class CombatUI : MonoBehaviour
     }
     public void UseItemButton()
     {
-        playerManager.UseLifeCore(10);
+        playerManager.UseLifeCore(10); // Heals the player
     }
     public void FleeButton()
     {

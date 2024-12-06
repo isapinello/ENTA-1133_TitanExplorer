@@ -7,7 +7,7 @@ public class TreasureRoom : RoomBase
     private InGameHUD _inGameHUD;
 
     [System.Obsolete]
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // Every time you enter or re-enter the treasure room you receive a life core
     {
         _inGameHUD = FindObjectOfType<InGameHUD>();
 

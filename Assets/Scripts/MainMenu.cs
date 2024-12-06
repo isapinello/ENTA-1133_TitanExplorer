@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void ButtonStartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"); // Loads the Game scene
     }
 
     public void ButtonEndGame()
